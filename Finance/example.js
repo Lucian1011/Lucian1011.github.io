@@ -23,7 +23,7 @@ var option = {
 
 
 function convert_str_to_json(str){
-    return eval('(' + str + ')')
+    return eval('(' + str + ')');
 }
 
 // 使用刚指定的配置项和数据显示图表。
@@ -65,6 +65,6 @@ myChart.showLoading();
 
 $.get('total_data.json').done(function (total_data){
     myChart.hideLoading();
-    total_data = convert_str_to_json(total_data)
-    myChart.setOption(total_data)
+    total_data = convert_str_to_json(total_data);
+    myChart.setOption(total_data);
 })
