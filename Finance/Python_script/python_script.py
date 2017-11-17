@@ -66,7 +66,7 @@ def create_json(result_json):
     result_dict["series"] = series
     print(result_dict)
     return_json = json.dumps(result_dict)
-    file = open("Finance_echarts/echarts/total_data.json", "w")
+    file = open("total_data.json", "w")
     file.write(return_json)
     file.close()
 
