@@ -29,7 +29,7 @@ function convert_str_to_json(str){
 // 使用刚指定的配置项和数据显示图表。
 // myChart.setOption(option);
 
-// myChart.showLoading();
+myChart.showLoading();
 // $.get('data.json').done(function (datas) {
 //
 //     console.error(typeof(datas));
@@ -63,10 +63,9 @@ function convert_str_to_json(str){
 //
 // })
 
-total_data = convert_str_to_json(total_data);
-myChart.setOption(total_data);
 
-// $.get('total_data.json').done(function (total_data){
-//     myChart.hideLoading();
-//
-// })
+$.get('total_data.json').done(function (total_data){
+    myChart.hideLoading();
+    total_data = convert_str_to_json(total_data);
+    myChart.setOption(total_data);
+})

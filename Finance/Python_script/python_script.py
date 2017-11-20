@@ -50,7 +50,7 @@ def get_date_list(result_json):
     return date_list
     print(date_list)
 
-def create_json(result_json):
+def create_json_LJJZ_list(result_json):
     LJJZ_list = get_LJJZ_list(result_json)
     date_list = get_date_list(result_json)
     result_dict = {}
@@ -68,6 +68,25 @@ def create_json(result_json):
     return_json = json.dumps(result_dict)
     file = open("total_data.json", "w")
     file.write(return_json)
+    file.close()
+
+# 获取一段时间的累计净值，gap 表示间隔时间（单位是 天）
+def get_LJJZ_list_with_gap(result_json, gap):
+    datas = result_json["Datas"]
+    datas.reverse()
+    print("len", len(datas))
+    # 先把数据清空
+    file_name = "dayday_JiJin_累计净值_间隔差_" + str(gap) + "天"
+    file = open(file_name, "w")
+    file.write("")
+    file.close()
+    file = open(file_name, "w+")
+    for index in range(0, len(datas)-gap, 1):
+        # print(datas[index+gap-1])
+        last = float(datas[index+gap]["LJJZ"])
+        first = float(datas[index]["LJJZ"])
+        # print("收益率=(%f-%f)/%f=%f" %(last, first, first, (last-first)/first))
+        file.write(str((last-first)/first) + "\n")
     file.close()
 
 if __name__ == "__main__":
@@ -89,5 +108,5 @@ if __name__ == "__main__":
     '''
     这里拿到了 result_json_format
     '''
-    create_json(result_json_format)
+    create_json_LJJZ_list(result_json_format)
     print("OK")
