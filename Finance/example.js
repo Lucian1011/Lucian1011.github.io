@@ -63,8 +63,8 @@ myChart.showLoading();
 //
 // })
 
-
-$.get('total_data.json').done(function (total_data){
+var url = "https://raw.githubusercontent.com/Lucian1011/Lucian1011.github.io/master/Finance/total_data.json"
+$.get(url).done(function (total_data){
     myChart.hideLoading();
     total_data = convert_str_to_json(total_data);
     myChart.setOption(total_data);
