@@ -61,7 +61,7 @@ function get_result_json_format(fund_code, url){
         yAxis: {},
         series: [{
             name: '净值',
-            type: 'bar',
+            type: 'line',
             data: get_keyword_array_from_array("LJJZ", result_json.Datas)
         }]
       })
