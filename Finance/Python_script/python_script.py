@@ -32,6 +32,7 @@ def get_累计净值_list(result_json):
 '''
 for echarts
 '''
+# 获取累计净值列表
 def get_LJJZ_list(result_json):
     datas = result_json["Datas"]
     datas.reverse()  # 先反转一下
@@ -41,6 +42,7 @@ def get_LJJZ_list(result_json):
     return LJJZ
     print(LJJZ)
 
+# 获取日期列表
 def get_date_list(result_json):
     datas = result_json["Datas"]
     # datas.reverse()  # 先调用 get_LJJZ_list，里面已经反转过一次，这里就不能再反转了
@@ -50,7 +52,8 @@ def get_date_list(result_json):
     return date_list
     print(date_list)
 
-def create_json_LJJZ_list(result_json):
+# 累计净值走势图
+def create_json_LJJZ_list(fund_code, result_json):
     LJJZ_list = get_LJJZ_list(result_json)
     date_list = get_date_list(result_json)
     result_dict = {}
@@ -70,13 +73,13 @@ def create_json_LJJZ_list(result_json):
     file.write(return_json)
     file.close()
 
-# 获取一段时间的累计净值，gap 表示间隔时间（单位是 天）
+# 获取一段时间的累计净值涨幅，gap 表示间隔时间（单位是/天）
 def get_LJJZ_list_with_gap(result_json, gap):
     datas = result_json["Datas"]
     datas.reverse()
-    print("len", len(datas))
+    # print("len", len(datas))
     # 先把数据清空
-    file_name = "dayday_JiJin_累计净值_间隔差_" + str(gap) + "天"
+    file_name = "dayday_JiJin_累计净值涨幅_间隔_" + str(gap) + "天"
     file = open(file_name, "w")
     file.write("")
     file.close()
@@ -108,5 +111,5 @@ if __name__ == "__main__":
     '''
     这里拿到了 result_json_format
     '''
-    create_json_LJJZ_list(result_json_format)
+    create_json_LJJZ_list(fund_code, result_json_format)
     print("OK")
