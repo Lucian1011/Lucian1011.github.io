@@ -1,7 +1,8 @@
 
 
 var json_data
-var fund_code = "001986"
+// var fund_code = "001986"
+var fund_code = "161725"
 var pageSize = 10
 var url = "http://fundmobapi.eastmoney.com/FundMApi/FundNetDiagram.ashx?deviceid=app_danganye_f10&version=V2.1.0&product=EFund&plat=Iphone&FCODE=" + fund_code + "&pageIndex=1&pageSize=" + pageSize + "&_=1500108520818&callback=?"
 
@@ -94,22 +95,29 @@ get_all_lists(fund_code).then(function(){
   myChart.hideLoading();
   myChart.setOption({
     title: {
-        text: '累计净值'
+      text: fund_code + '累计净值'
     },
     tooltip: {
       "trigger": "axis"
     },
+    dataZoom: {
+
+    },
     legend: {
-        data:['净值']
+      data:['累计净值','单位净值']
     },
     xAxis: {
-        data: date_list
+      data: date_list
     },
     yAxis: {},
     series: [{
-        name: '净值',
-        type: 'line',
-        data: LJJZ_list
+      name: '累计净值',
+      type: 'line',
+      data: LJJZ_list
+    },{
+      name: '单位净值',
+      type: 'line',
+      data: DWJZ_list
     }]
   })
 })
