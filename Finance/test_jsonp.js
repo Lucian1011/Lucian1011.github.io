@@ -5,6 +5,10 @@ var fund_code = "001986"
 var pageSize = 10
 var url = "http://fundmobapi.eastmoney.com/FundMApi/FundNetDiagram.ashx?deviceid=app_danganye_f10&version=V2.1.0&product=EFund&plat=Iphone&FCODE=" + fund_code + "&pageIndex=1&pageSize=" + pageSize + "&_=1500108520818&callback=?"
 
+var date_list = []  // 日期列表
+var LJJZ_list = [] // 累计净值列表
+var DWJZ_list = [] // 单位菁池列表
+
 // function afterget(json_data_inside){
 //   console.error("inside func json_data_inside", json_data_inside);
 // }
@@ -41,17 +45,73 @@ function get_total_count(fund_code){
 
 
 function get_all_records(fund_code){
-  return new Promise((resolve, reject) =>{
-  get_total_count(fund_code).then(function(pageSize){
-      let url = "http://fundmobapi.eastmoney.com/FundMApi/FundNetDiagram.ashx?deviceid=app_danganye_f10&version=V2.1.0&product=EFund&plat=Iphone&FCODE=" + fund_code + "&pageIndex=1&pageSize=" + pageSize + "&_=1500108520818&callback=?"
-      $.get(url, function (ret){
-        console.error("get_all_records | ret", ret);
-        resolve(ret);
-      }, 'jsonp')
+  return json_data ? json_data : new Promise((resolve, reject) =>{
+    console.error("json_data is undefined, here to return promise");
+    get_total_count(fund_code).then(function(pageSize){
+        let url = "http://fundmobapi.eastmoney.com/FundMApi/FundNetDiagram.ashx?deviceid=app_danganye_f10&version=V2.1.0&product=EFund&plat=Iphone&FCODE=" + fund_code + "&pageIndex=1&pageSize=" + pageSize + "&_=1500108520818&callback=?"
+        $.get(url, function (ret){
+          console.error("get_all_records | ret", ret);
+          json_data = ret.Datas;
+          resolve(ret.Datas);
+        }, 'jsonp')
+      })
+  })
+}
+
+// 获得累计净值、单位净值、日期列表
+function get_all_lists(fund_code){
+  return new Promise((resolve, reject) => {
+    get_all_records(fund_code).then(function(datas){
+      let i;
+      for(i=0; i<datas.length; i++){
+        LJJZ_list.push(datas[i].LJJZ)
+        DWJZ_list.push(datas[i].DWJZ)
+        date_list.push(datas[i].FSRQ)
+      }
+      // datas.forEach(function(item){
+      //   console.error("jjjjjj");
+      //   LJJZ_list.push(item.LJJZ)
+      //   DWJZ_list.push(item.DWJZ)
+      //   date_list.push(item.FSRQ)
+      // })
+      resolve();
     })
   })
 }
 
-get_all_records(fund_code).then(function(json_data){
-  console.error("finnally, I get the datas", json_data.Datas);
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('main'));
+myChart.showLoading()
+
+get_all_lists(fund_code).then(function(){
+  console.error("各个列表啊");
+  console.error("LJJZ_list", LJJZ_list);
+  console.error("DWJZ_list", DWJZ_list);
+  console.error("date_list", date_list);
+  LJJZ_list.reverse();
+  DWJZ_list.reverse();
+  date_list.reverse();
+  myChart.hideLoading();
+  myChart.setOption({
+    title: {
+        text: '累计净值'
+    },
+    tooltip: {
+      "trigger": "axis"
+    },
+    legend: {
+        data:['净值']
+    },
+    xAxis: {
+        data: date_list
+    },
+    yAxis: {},
+    series: [{
+        name: '净值',
+        type: 'line',
+        data: LJJZ_list
+    }]
+  })
 })
+
+console.error("outside, json_data", json_data);
