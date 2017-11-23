@@ -109,7 +109,10 @@ get_all_lists(fund_code).then(function(){
     xAxis: {
       data: date_list
     },
-    yAxis: {},
+    yAxis: {
+      min: 'dataMin',
+      max: 'dataMax'
+    },
     series: [{
       name: '累计净值',
       type: 'line',
