@@ -143,14 +143,19 @@ function create_DWJZ_LJJZ_lines(){
 function get_gap_list(gap, min_gap){
   let index;
   let LJJZ_list_with_gap = [];
-  for(index=0; index<min_gap; index++){
+  for(index=0; index<gap; index++){
     LJJZ_list_with_gap.push(0)
   }
   for(index=0; index<LJJZ_list.length-gap; index++){
     let first = LJJZ_list[index]
     let last = LJJZ_list[index+gap]
-    LJJZ_list_with_gap.push(toPercent((last-first)/first))
+    let data = toPercent((last-first)/first)
+    if(data == 1.314){
+      console.log(first, last);
+    }
+    LJJZ_list_with_gap.push(data)
   }
+  console.log("LJJZ_list", LJJZ_list);
   return LJJZ_list_with_gap
 }
 
@@ -167,7 +172,7 @@ function create_LJJZ_gap(gap){
     let min_gap = gap_temp[0]
     let index;
     for(index=0; index<min_gap; index++){
-      date_list_clone.shift();
+      // date_list_clone.shift();
     }
     // 遍历 gap 根据 gap 处理出不同的 LJJZ_list_with_gap 并加入到大的 LJJZ_list_with_gap 数组
     for(index=0; index<gap.length; index++){
@@ -179,7 +184,7 @@ function create_LJJZ_gap(gap){
       legend_list.push("gap-"+gap[index])
     }
   }else{
-    date_list_clone.shift();
+    // date_list_clone.shift();
     LJJZ_list_with_gap.push(get_gap_list(gap))
     legend_list.push("gap-"+gap)
   }
@@ -188,7 +193,7 @@ function create_LJJZ_gap(gap){
   let index;
   // let gap = 1;
   for(index=1; index<=gap; index++){
-    date_list.shift();  // 去掉数组内的第一个元素
+    // date_list.shift();  // 去掉数组内的第一个元素
   }
   console.log("legend_list", legend_list);
   // console.log("LJJZ_list_with_gap", LJJZ_list_with_gap);
@@ -214,11 +219,6 @@ function create_LJJZ_gap(gap){
       max: 'dataMax'
     },
     series: LJJZ_list_with_gap
-    // series: [{
-    //   name: '累计净值_gap' + gap,
-    //   type: 'line',
-    //   data: LJJZ_list_with_gap
-    // }]
   })
 }
 
