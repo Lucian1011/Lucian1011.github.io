@@ -48,7 +48,8 @@ function get_total_count(fund_code){
 
 
 function get_all_records(fund_code){
-  return json_data ? json_data : new Promise((resolve, reject) =>{
+  // return json_data ? json_data : new Promise((resolve, reject) =>{
+  return new Promise((resolve, reject) =>{  // 为了防止后面日期出错先这么处理
     console.error("json_data is undefined, here to return promise");
     get_total_count(fund_code).then(function(pageSize){
         let url = "http://fundmobapi.eastmoney.com/FundMApi/FundNetDiagram.ashx?deviceid=app_danganye_f10&version=V2.1.0&product=EFund&plat=Iphone&FCODE=" + fund_code + "&pageIndex=1&pageSize=" + pageSize + "&_=1500108520818&callback=?"
