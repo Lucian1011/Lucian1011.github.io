@@ -11,6 +11,7 @@ def get_累计净值_list_with_gap(result_json, gap):
     file = open(file_name, "w")
     file.write("")
     file.close()
+    # 写入新的数据
     file = open(file_name, "w+")
     for index in range(0, len(datas)-gap, 1):
         # print(datas[index+gap-1])

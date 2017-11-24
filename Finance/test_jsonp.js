@@ -1,8 +1,10 @@
-
+chart_DWJZ_LJJZ_lines
 
 var json_data
 // var fund_code = "001986"
-var fund_code = "161725"
+// var fund_code = "161725"  // 白酒
+// var fund_code = "001986"  // 前海开源人工智能
+var fund_code = "001618"  // 天弘中证电子指数C
 var pageSize = 10
 var url = "http://fundmobapi.eastmoney.com/FundMApi/FundNetDiagram.ashx?deviceid=app_danganye_f10&version=V2.1.0&product=EFund&plat=Iphone&FCODE=" + fund_code + "&pageIndex=1&pageSize=" + pageSize + "&_=1500108520818&callback=?"
 
@@ -81,8 +83,8 @@ function get_all_lists(fund_code){
 }
 
 // 基于准备好的dom，初始化echarts实例
-var myChart = echarts.init(document.getElementById('main'));
-myChart.showLoading()
+var chart_DWJZ_LJJZ_lines = echarts.init(document.getElementById('DWJZ_LJJZ_lines'));
+chart_DWJZ_LJJZ_lines.showLoading()
 
 get_all_lists(fund_code).then(function(){
   console.error("各个列表啊");
@@ -92,8 +94,8 @@ get_all_lists(fund_code).then(function(){
   LJJZ_list.reverse();
   DWJZ_list.reverse();
   date_list.reverse();
-  myChart.hideLoading();
-  myChart.setOption({
+  chart_DWJZ_LJJZ_lines.hideLoading();
+  chart_DWJZ_LJJZ_lines.setOption({
     title: {
       text: fund_code + '累计净值'
     },
@@ -125,4 +127,58 @@ get_all_lists(fund_code).then(function(){
   })
 })
 
-console.error("outside, json_data", json_data);
+
+// 基于准备好的dom，初始化echarts实例
+var chart_LJJZ_gap = echarts.init(document.getElementById('LJJZ_gap'));
+chart_LJJZ_gap.showLoading()
+
+get_all_lists(fund_code).then(function(){
+  console.error("各个列表啊2");
+  console.error("LJJZ_list2", LJJZ_list);
+  console.error("DWJZ_list2", DWJZ_list);
+  console.error("date_list2", date_list);
+  LJJZ_list.reverse();
+  DWJZ_list.reverse();
+  date_list.reverse();
+
+  chart_LJJZ_gap.hideLoading();
+  let index;
+  let gap = 1;
+  for(index=1; index<=gap; index++){
+    date_list.shift();  // 去掉第一个元素
+  }
+  LJJZ_list_with_gap = [];
+  for(index=0; index<LJJZ_list.length-gap; index++){
+    let first = LJJZ_list[index]
+    let last = LJJZ_list[index+gap]
+    LJJZ_list_with_gap.push((last-first)/first)
+  }
+  // console.log("LJJZ_list_with_gap", LJJZ_list_with_gap);
+  // console.log("new date_list", date_list);
+  chart_LJJZ_gap.setOption({
+    title: {
+      text: fund_code + '累计净值 gap' + gap
+    },
+    tooltip: {
+      "trigger": "axis"
+    },
+    dataZoom: {
+
+    },
+    legend: {
+      data:['累计净值 gap']
+    },
+    xAxis: {
+      data: date_list
+    },
+    yAxis: {
+      min: 'dataMin',
+      max: 'dataMax'
+    },
+    series: [{
+      name: '累计净值_gap' + gap,
+      type: 'line',
+      data: LJJZ_list_with_gap
+    }]
+  })
+})
