@@ -193,7 +193,7 @@ function create_LJJZ_gap(gap){
   let index;
   // let gap = 1;
   for(index=1; index<=gap; index++){
-    // date_list.shift();  // 去掉数组内的第一个元素
+    // date_list.shift();  // 去掉数组内的第一个元素hah
   }
   console.log("legend_list", legend_list);
   // console.log("LJJZ_list_with_gap", LJJZ_list_with_gap);
