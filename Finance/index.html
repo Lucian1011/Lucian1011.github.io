@@ -2,17 +2,30 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
-    <!-- 百度的链接太慢了，还是换成本地的吧 -->
+    <title>Lucian Finance Analyze</title>
+    <script src="echarts_utils/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="echarts_utils/echarts-tag3.8.5.min.js" charset="utf-8"></script>
+
     <!-- <script src="http://echarts.baidu.com/dist/echarts.min.js" charset="utf-8"></script> -->
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script> -->
-    <!-- 还是放在 echarts_utils 文件夹下吧，本地的还是要给力点 -->
-    <script src="echarts_utils/echarts-tag3.8.5.min.js" charset="utf-8"></script>
-    <script src="echarts_utils/jquery-3.2.1.min.js" charset="utf-8"></script>
-
+    <script src="echarts_utils/promise.min.js" charset="utf-8"></script>
   </head>
   <body>
-    <div id="main" style="width: 100%;height:400px;"></div>
-    <script src="example.js"></script>
+    <form>
+      Please input gaps<input type="text" name="all_lists" value="" id="update_all_lists">
+      <button type="button" name="button" onclick="click_ok1()">OK</button>
+    </form>
+    <div id="DWJZ_LJJZ_lines" style="width: 90%;height:400px;"></div>
+    <div style="height: 30px;"></div>
+    <form>
+      Please input gaps<input type="text" name="LJJZ_gaps" value="" id="update_LJJZ_gaps">
+      <button type="button" name="button" onclick="click_ok2()">OK</button>
+    </form>
+    <div style="height: 30px;"></div>
+    <div id="LJJZ_gap" style= "width: 90%;height:400px;"></div>
+
+    <!-- <script src="only_js.js" charset="utf-8"></script> -->
+    <script src="test_jsonp.js" charset="utf-8"></script>
+
   </body>
 </html>

@@ -86,6 +86,23 @@ function get_all_lists(fund_code){
   })
 }
 
+//更新一下所有的列表数据，因为换了 fund_code
+function update_all_lists(fund_code){
+  return new Promise((resolve, reject) => {
+    // 展示 Loading
+    chart_DWJZ_LJJZ_lines.showLoading();
+    chart_LJJZ_gap.showLoading();
+    //
+    LJJZ_list.splice(0, LJJZ_list.length);
+    DWJZ_list.splice(0, DWJZ_list.length);
+    date_list.splice(0, date_list.length);
+    get_all_lists(fund_code).then(function(){
+      resolve();
+    });
+  })
+
+}
+
 // 把小数转换成百分数，暂时取三位数
 function toPercent(point){
     var str = Number(point*100).toFixed(3);
@@ -100,9 +117,9 @@ var chart_LJJZ_gap;
 //创建所有的图表对象
 function init_all_echarts(){
   chart_DWJZ_LJJZ_lines = echarts.init(document.getElementById('DWJZ_LJJZ_lines'));
+  chart_DWJZ_LJJZ_lines.showLoading();
   chart_LJJZ_gap = echarts.init(document.getElementById('LJJZ_gap'));
-  chart_DWJZ_LJJZ_lines.showLoading()
-  chart_LJJZ_gap.showLoading()
+  chart_LJJZ_gap.showLoading();
 }
 
 function create_DWJZ_LJJZ_lines(){
@@ -206,7 +223,6 @@ function create_LJJZ_gap(gap){
       "trigger": "axis"
     },
     dataZoom: {
-
     },
     legend: {
       data: legend_list
@@ -222,6 +238,10 @@ function create_LJJZ_gap(gap){
   })
 }
 
+function update_LJJZ_gap(gap){
+  chart_LJJZ_gap.showLoading();
+  create_LJJZ_gap(gap);
+}
 
 init_all_echarts();  // 先创建图表对象
 get_all_lists(fund_code).then(function(){
@@ -230,5 +250,28 @@ get_all_lists(fund_code).then(function(){
   console.error("DWJZ_list", DWJZ_list);
   console.error("date_list", date_list);
   create_DWJZ_LJJZ_lines();
-  create_LJJZ_gap([3, 30]);
+  create_LJJZ_gap([3, 10, 30]);
 })
+
+// 更新所有 lists
+function click_ok1(){
+  fund_code = document.getElementById("update_all_lists").value;
+  update_all_lists(fund_code).then(function(){
+    create_DWJZ_LJJZ_lines();
+    create_LJJZ_gap([3, 10, 30]);
+  })
+}
+
+// 更新累计净值 gaps 列表
+function click_ok2(){
+  console.error("You have clicked ok");
+  let gaps_list = document.getElementById("update_LJJZ_gaps").value.split(' ');
+  console.error(gaps_list);
+  // 更新累计净值 gap 列表
+  let index;
+  for(index=0; index<gaps_list.length;index++){
+    gaps_list[index] = parseInt(gaps_list[index]);
+  }
+  console.error("after converting, gaps_list=", gaps_list);
+  update_LJJZ_gap(gaps_list);
+}
