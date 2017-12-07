@@ -181,7 +181,9 @@ function get_gap_list(gap, min_gap){
 function create_LJJZ_gap(gap){
   console.log(typeof gap === 'object');
   let LJJZ_list_with_gap = [];  // 大的 LJJZ_list_with_gap
-  let legend_list = [];  // legend_list
+  // 这里还是有 bug 啊
+  let legend_list = [];
+  legend_list = legend_list.length>0? legend_list.splice(0, legend_list.length):[];  // legend_list
   let date_list_clone = date_list.concat();
   // 如果 gap 是一个数组
   if(typeof gap === 'object'){
@@ -196,16 +198,16 @@ function create_LJJZ_gap(gap){
     // 遍历 gap 根据 gap 处理出不同的 LJJZ_list_with_gap 并加入到大的 LJJZ_list_with_gap 数组
     for(index=0; index<gap.length; index++){
       LJJZ_list_with_gap.push({
-        name: "LJJZ gap-" + gap[index],
+        name: "gap-" + gap[index],
         type: "line",
         data: get_gap_list(gap[index], min_gap)
       })
-      legend_list.push("LJJZ gap-"+gap[index])
+      legend_list.push("gap-"+gap[index])
     }
   }else{
     // date_list_clone.shift();
     LJJZ_list_with_gap.push(get_gap_list(gap))
-    legend_list.push("LJJZ gap-"+gap)
+    legend_list.push("gap-"+gap)
   }
 
   chart_LJJZ_gap.hideLoading();
@@ -226,6 +228,10 @@ function create_LJJZ_gap(gap){
     dataZoom: {
     },
     legend: {
+      type: "scroll",
+      orient: 'vertical',
+      top: "middle",
+      left: "right",
       data: legend_list
     },
     xAxis: {
