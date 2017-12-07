@@ -200,12 +200,12 @@ function create_LJJZ_gap(gap){
         type: "line",
         data: get_gap_list(gap[index], min_gap)
       })
-      legend_list.push("gap-"+gap[index])
+      legend_list.push("LJJZ gap-"+gap[index])
     }
   }else{
     // date_list_clone.shift();
     LJJZ_list_with_gap.push(get_gap_list(gap))
-    legend_list.push("gap-"+gap)
+    legend_list.push("LJJZ gap-"+gap)
   }
 
   chart_LJJZ_gap.hideLoading();
@@ -215,6 +215,7 @@ function create_LJJZ_gap(gap){
     // date_list.shift();  // 去掉数组内的第一个元素
   }
   console.log("legend_list", legend_list);
+  // 需要注意一下， legend 中的字段要和 series 中数组元素中的 name 字段一致
   chart_LJJZ_gap.setOption({
     title: {
       text: fund_code + '累计净值 gap' + gap
