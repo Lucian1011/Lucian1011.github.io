@@ -11,6 +11,7 @@ var date_list = []  // 日期列表
 var LJJZ_list = [] // 累计净值列表
 var DWJZ_list = [] // 单位菁池列表
 
+var default_gaps = [10, 30, 100]; // 默认的 gaps 数组
 // function afterget(json_data_inside){
 //   console.error("inside func json_data_inside", json_data_inside);
 // }
@@ -250,15 +251,16 @@ get_all_lists(fund_code).then(function(){
   console.error("DWJZ_list", DWJZ_list);
   console.error("date_list", date_list);
   create_DWJZ_LJJZ_lines();
-  create_LJJZ_gap([3, 10, 30]);
+  create_LJJZ_gap(default_gaps);
 })
 
 // 更新所有 lists
 function click_ok1(){
   fund_code = document.getElementById("update_all_lists").value;
+  // 需要在这里处理输入只有一个 gap 的 bug
   update_all_lists(fund_code).then(function(){
     create_DWJZ_LJJZ_lines();
-    create_LJJZ_gap([3, 10, 30]);
+    create_LJJZ_gap(default_gaps);
   })
 }
 
