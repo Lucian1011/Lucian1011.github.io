@@ -123,6 +123,7 @@ function init_all_echarts(){
   chart_LJJZ_gap.showLoading();
 }
 
+// 创建单位净值和累计净值曲线
 function create_DWJZ_LJJZ_lines(){
   chart_DWJZ_LJJZ_lines.hideLoading();
   chart_DWJZ_LJJZ_lines.setOption({
@@ -214,8 +215,6 @@ function create_LJJZ_gap(gap){
     // date_list.shift();  // 去掉数组内的第一个元素
   }
   console.log("legend_list", legend_list);
-  // console.log("LJJZ_list_with_gap", LJJZ_list_with_gap);
-  // console.log("new date_list", date_list);
   chart_LJJZ_gap.setOption({
     title: {
       text: fund_code + '累计净值 gap' + gap
@@ -246,10 +245,10 @@ function update_LJJZ_gap(gap){
 
 init_all_echarts();  // 先创建图表对象
 get_all_lists(fund_code).then(function(){
-  console.error("各个列表啊");
-  console.error("LJJZ_list", LJJZ_list);
-  console.error("DWJZ_list", DWJZ_list);
-  console.error("date_list", date_list);
+  console.log("各个列表啊");
+  console.log("LJJZ_list", LJJZ_list);
+  console.log("DWJZ_list", DWJZ_list);
+  console.log("date_list", date_list);
   create_DWJZ_LJJZ_lines();
   create_LJJZ_gap(default_gaps);
 })
@@ -257,7 +256,6 @@ get_all_lists(fund_code).then(function(){
 // 更新所有 lists
 function click_ok1(){
   fund_code = document.getElementById("update_all_lists").value;
-  // 需要在这里处理输入只有一个 gap 的 bug
   update_all_lists(fund_code).then(function(){
     create_DWJZ_LJJZ_lines();
     create_LJJZ_gap(default_gaps);
@@ -266,14 +264,15 @@ function click_ok1(){
 
 // 更新累计净值 gaps 列表
 function click_ok2(){
-  console.error("You have clicked ok");
+  console.log("You have clicked ok_2");
+  // 需要在这里处理输入只有一个 gap 的 bug
   let gaps_list = document.getElementById("update_LJJZ_gaps").value.split(' ');
-  console.error(gaps_list);
+  console.log(gaps_list);
   // 更新累计净值 gap 列表
   let index;
   for(index=0; index<gaps_list.length;index++){
     gaps_list[index] = parseInt(gaps_list[index]);
   }
-  console.error("after converting, gaps_list=", gaps_list);
+  console.log("after converting, gaps_list=", gaps_list);
   update_LJJZ_gap(gaps_list);
 }
