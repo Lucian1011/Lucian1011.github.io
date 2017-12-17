@@ -258,6 +258,10 @@ get_all_lists(fund_code).then(function(){
   console.log("date_list", date_list);
   create_DWJZ_LJJZ_lines();
   create_LJJZ_gap(default_gaps);
+  // 读个本地文件试试看
+  $.get("buy_info.json").done((data) => {
+    console.error("json data", data);
+  })
 })
 
 // 更新所有 lists
