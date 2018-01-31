@@ -1,0 +1,43 @@
+.error {
+    /* font-weight: bold; */
+    color: red;
+}
+
+.upload {
+    color: #00b505;
+}
+
+.download {
+    color: blue;
+}
+
+.mocked {
+    color: burlywood;
+}
+
+.selected {
+    background-color: #e0e0e0;
+}
+
+#editor {
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#log_display p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%
+}
+
+/***新开始*/
+.ws_container {
+    margin: 0 20px;
+}
+.ws_container .ws_panel{
+
+}
