@@ -1,5 +1,5 @@
 /**
- * Created by leiguiliang on 2017/9/6.
+ * Modified by Lucian on 2018/2/6.
  */
 
 function WS_Socket(ws_url,ws_received_msg_callback){
@@ -142,11 +142,10 @@ $(function () {
     const ACTION_APPEND_MOCK_LOG = 'action_append_mock_log';
 
     const DEFAULT_MOCK_SCRIPT = '' +
-        'class MyMock(MockHere):\n' +
-        '    def mock_req(self, request_content):\n' +
-        '        return request_content\n' +
-        '    def mock_resp(self, response_content):\n' +
-        '        return response_content\n' +
+        'def mock_req(request_content):\n' +
+        '    return request_content\n' +
+        'def mock_resp(response_content):\n' +
+        '    return response_content\n' +
         '\n';
 
     var ws_url = "ws://"+ location.host +"/mock_ws_client/echo";
