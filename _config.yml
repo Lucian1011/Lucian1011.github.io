@@ -1,8 +1,0 @@
-title: Lucian的个人博客
-description: Lucian-blog
-google_analytics: 
-show_downloads: true
-theme: jekyll-theme-modernist
-
-gems:
-  - jekyll-mentions
